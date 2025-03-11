@@ -1,0 +1,80 @@
+class Solution:
+    def countOfSubstrings(self, word: str, k: int) -> int:
+        consonant_count = 0
+        a_count = 0
+        e_count = 0
+        i_count = 0
+        o_count = 0
+        u_count = 0
+
+        def is_consonant(s: str) -> bool:
+            if s != "a" and s != "e" and s != "i" and s != "o" and s != "u":
+                return True
+            return False
+
+        def update_l(s: str):
+            nonlocal consonant_count
+            nonlocal a_count
+            nonlocal e_count
+            nonlocal i_count
+            nonlocal o_count
+            nonlocal u_count
+
+            if s == "a":
+                a_count -= 1
+            if s == "e":
+                e_count -= 1
+            if s == "i":
+                i_count -= 1
+            if s == "o":
+                o_count -= 1
+            if s == "u":
+                u_count -= 1
+
+            if is_consonant(s):
+                consonant_count -= 1
+
+        l = 0
+        N = len(word)
+        count = 0
+
+        for r in range(N):
+            val_01 = word[l]
+            val_02 = word[r]
+            if word[r] == "a":
+                a_count += 1
+            if word[r] == "e":
+                e_count += 1
+            if word[r] == "i":
+                i_count += 1
+            if word[r] == "o":
+                o_count += 1
+            if word[r] == "u":
+                u_count += 1
+
+            if is_consonant(word[r]):
+                consonant_count += 1
+
+            while consonant_count > k:
+                update_l(word[l])
+                l += 1
+                continue
+
+            # if is_consonant(word[r]):
+            #     consonant_count += 1
+
+            if not (a_count and e_count and i_count and o_count and u_count):
+                continue
+
+            if a_count and e_count and i_count and o_count and u_count and consonant_count == k:
+                count += 1
+                # update_l(word[l])
+                # l += 1
+                if r == len(word) - 1:
+                    while a_count and e_count and i_count and o_count and u_count and consonant_count == k:
+                        update_l(word[l])
+                        if a_count and e_count and i_count and o_count and u_count and consonant_count == k:
+                            count += 1
+
+        return count
+        
