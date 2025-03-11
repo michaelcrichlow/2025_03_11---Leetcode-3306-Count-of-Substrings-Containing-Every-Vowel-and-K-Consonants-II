@@ -77,4 +77,7 @@ class Solution:
                             count += 1
 
         return count
+
+# This was my first approach. Ultimately did not work. It's here for posterity and hopefully will show how much I've grown
+# in the future. 
         
